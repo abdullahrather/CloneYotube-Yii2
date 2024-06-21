@@ -40,15 +40,12 @@ jobs:
     - name: Install dependencies
       run: composer install
 
-    - name: Create test database
-      run: |
-        mysql -h 127.0.0.1 -u root -proot -e 'CREATE DATABASE IF NOT EXISTS yii2_test;'
-
     - name: Verify yii executable
-      run: ls -al console && pwd
+      run: |
+        find . -name yii -type f
 
     - name: Run migrations
-      run: php console/yii migrate --interactive=0
+      run: php ./yii migrate --interactive=0
 
     - name: Run tests
       run: php vendor/bin/codecept run
