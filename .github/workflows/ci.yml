@@ -11,15 +11,14 @@ on:
 
 jobs:
   build:
-
     runs-on: ubuntu-latest
 
     services:
       mysql:
         image: mysql:5.7
         env:
-          MYSQL_ROOT_PASSWORD: root
-          MYSQL_DATABASE: yii2_test
+          MYSQL_ROOT_PASSWORD: ''
+          MYSQL_DATABASE: youtubeclone
         options: >-
           --health-cmd="mysqladmin ping --silent"
           --health-interval=10s
@@ -30,19 +29,15 @@ jobs:
 
     steps:
     - name: Checkout code
-      uses: actions/checkout@v2
+      uses: actions/checkout@v3
 
     - name: Set up PHP
       uses: shivammathur/setup-php@v2
       with:
-        php-version: '7.4'
+        php-version: '7.4.3'
 
     - name: Install dependencies
       run: composer install
-
-    - name: Verify yii executable
-      run: |
-        find . -name yii -type f
 
     - name: Run migrations
       run: php ./yii migrate --interactive=0
